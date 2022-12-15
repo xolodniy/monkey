@@ -1,17 +1,18 @@
 package monkey
 
 // Assembles a jump to a function value
-func jmpToFunctionValue(to uintptr) []byte {
+func jmpToFunctionValue(double uintptr) []byte {
+	d0 := byte(double)
+	d1 := byte(double >> 8)
+	d2 := byte(double >> 16)
+	d3 := byte(double >> 24)
+	d4 := byte(double >> 32)
+	d5 := byte(double >> 40)
+	d6 := byte(double >> 48)
+	d7 := byte(double >> 56)
+
 	return []byte{
-		0x48, 0xBA,
-		byte(to),
-		byte(to >> 8),
-		byte(to >> 16),
-		byte(to >> 24),
-		byte(to >> 32),
-		byte(to >> 40),
-		byte(to >> 48),
-		byte(to >> 56), // movabs rdx,to
-		0xFF, 0x22,     // jmp QWORD PTR [rdx]
+		0x48, 0xBA, d0, d1, d2, d3, d4, d5, d6, d7, // MOV rdx, double
+		0xFF, 0x22, // JMP [rdx]
 	}
 }
