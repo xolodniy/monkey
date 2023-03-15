@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"bou.ke/monkey"
+	"github.com/xolodniy/monkey"
 )
 
 func no() bool  { return false }
